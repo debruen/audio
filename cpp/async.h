@@ -9,21 +9,20 @@
 
 #include "src/program.h"
 
-// -- -- -- -- -- init
-class AsyncInit : public Napi::AsyncWorker {
+class AsyncInput : public Napi::AsyncWorker {
 
   private:
     Program& program;
     nlohmann::json m_data;
 
   public:
-    AsyncInit(Napi::Function& callback, Program& program)
-      : AsyncWorker(callback), program(program) {
+    AsyncInput(Napi::Function& callback, Program& program, nlohmann::json data)
+      : AsyncWorker(callback), program(program), m_data(data) {
     };
-    virtual ~AsyncInit() {};
+    virtual ~AsyncInput() {};
 
     void Execute() {
-      m_data = program.init();
+      m_data = program.data(m_data);
     };
     void OnOK() {
       std::string string = m_data.dump();
@@ -31,18 +30,17 @@ class AsyncInit : public Napi::AsyncWorker {
     };
 };
 
-// -- -- -- -- -- data
-class AsyncData : public Napi::AsyncWorker {
+class AsyncOutput : public Napi::AsyncWorker {
 
   private:
     Program& program;
     nlohmann::json m_data;
 
   public:
-    AsyncData(Napi::Function& callback, Program& program, nlohmann::json data)
+    AsyncOutput(Napi::Function& callback, Program& program, nlohmann::json data)
       : AsyncWorker(callback), program(program), m_data(data) {
     };
-    virtual ~AsyncData() {};
+    virtual ~AsyncOutput() {};
 
     void Execute() {
       m_data = program.data(m_data);

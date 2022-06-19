@@ -4,26 +4,28 @@
 // init Program class
 Program program;
 
-// -- -- -- -- -- init
-Napi::Value program_init(const Napi::CallbackInfo& info) {
-  Napi::Function callback = info[0].As<Napi::Function>();
 
-  AsyncInit* init_synthesis = new AsyncInit(callback, program);
-  init_synthesis->Queue();
-
-  std::string msg = "init";
-  return Napi::String::New(info.Env(),msg.c_str());
-};
-
-// -- -- -- -- -- data
-Napi::Value program_data(const Napi::CallbackInfo& info) {
+Napi::Value input(const Napi::CallbackInfo& info) {
   std::string string = info[0].As<Napi::String>().Utf8Value();
   Napi::Function callback = info[1].As<Napi::Function>();
 
   nlohmann::json json = nlohmann::json::parse(string);
 
-  AsyncData* data_synthesis = new AsyncData(callback, program, json);
-  data_synthesis->Queue();
+  AsyncInput* audio_input = new AsyncInput(callback, program, json);
+  audio_input->Queue();
+
+  std::string msg = "program: data synthesis";
+  return Napi::String::New(info.Env(),msg.c_str());
+};
+
+Napi::Value output(const Napi::CallbackInfo& info) {
+  std::string string = info[0].As<Napi::String>().Utf8Value();
+  Napi::Function callback = info[1].As<Napi::Function>();
+
+  nlohmann::json json = nlohmann::json::parse(string);
+
+  AsyncOutput* audio_output = new AsyncOutput(callback, program, json);
+  audio_output->Queue();
 
   std::string msg = "program: data synthesis";
   return Napi::String::New(info.Env(),msg.c_str());
@@ -31,8 +33,8 @@ Napi::Value program_data(const Napi::CallbackInfo& info) {
 
 Napi::Object Init(Napi::Env env, Napi::Object exports) {
 
-  exports["program_init"] = Napi::Function::New(env, program_init, std::string("program_init"));
-  exports["program_data"] = Napi::Function::New(env, program_data, std::string("program_data"));
+  exports["input"] = Napi::Function::New(env, input, std::string("input"));
+  exports["output"] = Napi::Function::New(env, output, std::string("output"));
 
   return exports;
 }
