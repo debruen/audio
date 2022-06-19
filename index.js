@@ -1,5 +1,5 @@
 
-const {input, output} = require('./build/Release/program.node')
+const {input, output} = require('./build/Release/audio.node')
 
 class Program{
   constructor() {}

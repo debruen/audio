@@ -22,7 +22,7 @@ class AsyncInput : public Napi::AsyncWorker {
     virtual ~AsyncInput() {};
 
     void Execute() {
-      m_data = program.data(m_data);
+      m_data = program.input(m_data);
     };
     void OnOK() {
       std::string string = m_data.dump();
@@ -43,7 +43,7 @@ class AsyncOutput : public Napi::AsyncWorker {
     virtual ~AsyncOutput() {};
 
     void Execute() {
-      m_data = program.data(m_data);
+      m_data = program.output(m_data);
     };
     void OnOK() {
       std::string string = m_data.dump();

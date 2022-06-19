@@ -1,6 +1,6 @@
 {
     "targets": [{
-        "target_name": "program",
+        "target_name": "audio",
         "cflags!": [ "-fno-exceptions" ],
         "cflags_cc!": [ "-fno-exceptions" ],
         'conditions': [

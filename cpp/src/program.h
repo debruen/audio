@@ -19,9 +19,6 @@ class Program {
   public:
     Program();
 
-    nlohmann::json init();
-    nlohmann::json data(nlohmann::json data);
-
     nlohmann::json input(nlohmann::json data);
     nlohmann::json output(nlohmann::json data);
 
