@@ -22,20 +22,10 @@
         ],
         'include_dirs': [
             "<!@(node -p \"require('node-addon-api').include\")",
-            "/usr/include/lib",
-            "/opt/homebrew/lib",
             "/opt/homebrew/include/",
-            "/opt/homebrew/include/opencv4"
         ],
         'libraries': [
             '-L/opt/homebrew/lib',
-            '-lopencv_core',
-            '-lopencv_imgproc',
-            '-lopencv_highgui',
-            '-lpng',
-            '-ltiff',
-            '-ljpeg',
-            '-lstk',
             '-lrtaudio',
             '-lfftw3'
         ],
