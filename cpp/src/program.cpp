@@ -4,7 +4,7 @@
 Program::Program() {
 }
 
-void Program::scan() {
+void Program::scan_devices() {
 
   _input_devices.clear();
   _output_devices.clear();
@@ -12,12 +12,12 @@ void Program::scan() {
   // Determine the number of devices available
   unsigned int devices = _dac.getDeviceCount();
 
-  // Scan through devices for various capabilities
+  // scan_devices through devices for various capabilities
   RtAudio::DeviceInfo info;
 
-  for ( unsigned int i=0; i<devices; i++ ) {
-    info = _dac.getDeviceInfo( i );
-    if ( info.probed == true ) {
+  for (unsigned int i = 0; i < devices; i++) {
+    info = _dac.getDeviceInfo(i);
+    if (info.probed == true) {
       nlohmann::json element;
 
       element["name"]   = info.name;
@@ -33,7 +33,7 @@ void Program::scan() {
 }
 
 nlohmann::json Program::input(nlohmann::json data) {
-  scan();
+  scan_devices();
 
   nlohmann::json response;
 
@@ -51,7 +51,7 @@ nlohmann::json Program::input(nlohmann::json data) {
 }
 
 nlohmann::json Program::output(nlohmann::json data) {
-  scan();
+  scan_devices();
 
   nlohmann::json response;
 
