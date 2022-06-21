@@ -9,10 +9,13 @@ class Program {
 
   private:
 
-    RtAudio _audio;
+    RtAudio _dac;
 
-    std::vector<RtAudio::DeviceInfo> _inputs;
-    std::vector<RtAudio::DeviceInfo> _outputs;
+    int _input = _dac.getDefaultInputDevice();
+    int _output = _dac.getDefaultOutputDevice();
+
+    std::vector<nlohmann::json> _input_devices;
+    std::vector<nlohmann::json> _output_devices;
 
     void scan();
 
